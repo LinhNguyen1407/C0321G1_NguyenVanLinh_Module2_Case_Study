@@ -10,7 +10,7 @@ public abstract class Services implements Serializable {
     private double rentalCosts;
     private int maxNumberPeople;
     private String rentalType;
-    private static final String SERVICE_NAME_REGEX = "^[A-Z][a-z]{1,}$";
+    private static final String SERVICE_NAME_REGEX = "^[A-Z][a-z]+[0-9]?$";
     private static final String RENTAL_TYPE_REGEX = "^[A-Z][a-z]{1,}$";
     ;
 

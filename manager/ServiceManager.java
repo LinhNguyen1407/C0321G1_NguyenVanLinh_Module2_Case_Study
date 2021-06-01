@@ -6,6 +6,7 @@ import case_study_FuramaResort.controllers.MainController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class ServiceManager {
     public static void addNewServices() {
@@ -69,10 +70,13 @@ public class ServiceManager {
                         showAllRoom();
                         break;
                     case 4:
+                        showAllVillaNotDuplicate();
                         break;
                     case 5:
+                        showAllHouseNotDuplicate();
                         break;
                     case 6:
+                        showAllRoomNotDuplicate();
                         break;
                     case 7:
                         MainController.displayMainMenu();
@@ -119,11 +123,10 @@ public class ServiceManager {
                 listVillas.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\villa.csv"));
                 listVillas.add(villa);
                 ReadAndWriteFile.writeToFile(listVillas, "src\\case_study_FuramaResort\\data\\villa.csv");
-                System.out.println("Do you like to continue adding Villa:\n" +
-                        "1.Yes\n" +
-                        "0.No");
-                int choiceAdd = Integer.parseInt(input.nextLine());
-                if (choiceAdd == 0) {
+
+                System.out.println("You don't want to continue. Press q to quit:\n");
+                String choiceAdd = input.nextLine();
+                if (choiceAdd.equals("q")) {
                     check = false;
                 }
             } catch (Exception e) {
@@ -133,11 +136,21 @@ public class ServiceManager {
     }
 
     public static void showAllVilla() {
-        List<Object> listAllVilla = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\villa.csv");
+        List<Object> listAllVillas = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\villa.csv");
         System.out.println("List all villas");
-        for (int index = 0; index < listAllVilla.size(); index++) {
-            System.out.println(index + 1 + ". " + listAllVilla.get(index));
+        for (int index = 0; index < listAllVillas.size(); index++) {
+            System.out.println(index + 1 + ". " + listAllVillas.get(index));
         }
+    }
+
+    private static void showAllVillaNotDuplicate() {
+        List<Object> listAllVillas = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\villa.csv");
+        TreeSet<String> listVillaNames = new TreeSet<>();
+        for (Object villa : listAllVillas) {
+            Villa villaCast = (Villa) villa;
+            listVillaNames.add(villaCast.getServiceName());
+        }
+        System.out.println("List all Villa not dupplicate: " + listVillaNames + "\n");
     }
 
     private static void addNewHouse() {
@@ -168,11 +181,10 @@ public class ServiceManager {
                 listHouse.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\house.csv"));
                 listHouse.add(house);
                 ReadAndWriteFile.writeToFile(listHouse, "src\\case_study_FuramaResort\\data\\house.csv");
-                System.out.println("Do you like to continue adding House: \n" +
-                        "1.Yes\n" +
-                        "0.No");
-                int choiceAdd = Integer.parseInt(input.nextLine());
-                if (choiceAdd == 0) {
+
+                System.out.println("You don't want to continue. Press q to quit:\n");
+                String choiceAdd = input.nextLine();
+                if (choiceAdd.equals("q")) {
                     check = false;
                 }
             } catch (Exception e) {
@@ -182,11 +194,21 @@ public class ServiceManager {
     }
 
     public static void showAllHouse() {
-        List<Object> listAllHouse = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\house.csv");
+        List<Object> listAllHouses = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\house.csv");
         System.out.println("List all houses");
-        for (int index = 0; index < listAllHouse.size(); index++) {
-            System.out.println(index + 1 + ". " + listAllHouse.get(index));
+        for (int index = 0; index < listAllHouses.size(); index++) {
+            System.out.println(index + 1 + ". " + listAllHouses.get(index));
         }
+    }
+
+    private static void showAllHouseNotDuplicate() {
+        List<Object> listAllHouses = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\house.csv");
+        TreeSet<String> listHouseNames = new TreeSet<>();
+        for (Object house : listAllHouses) {
+            House houseCast = (House) house;
+            listHouseNames.add(houseCast.getServiceName());
+        }
+        System.out.println("List all Houses not dupplicate: " + listHouseNames + "\n");
     }
 
     private static void addNewRoom() {
@@ -215,11 +237,10 @@ public class ServiceManager {
                 listRoom.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\room.csv"));
                 listRoom.add(room);
                 ReadAndWriteFile.writeToFile(listRoom, "src\\case_study_FuramaResort\\data\\room.csv");
-                System.out.println("Do you like to continue adding Room: \n" +
-                        "1.Yes\n" +
-                        "0.No");
-                int choiceAdd = Integer.parseInt(input.nextLine());
-                if (choiceAdd == 0) {
+
+                System.out.println("You don't want to continue. Press q to quit:\n");
+                String choiceAdd = input.nextLine();
+                if (choiceAdd.equals("q")) {
                     check = false;
                 }
             } catch (Exception e) {
@@ -229,10 +250,20 @@ public class ServiceManager {
     }
 
     public static void showAllRoom() {
-        List<Object> listAllRoom = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\room.csv");
+        List<Object> listAllRooms = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\room.csv");
         System.out.println("List all rooms");
-        for (int index = 0; index < listAllRoom.size(); index++) {
-            System.out.println(index + 1 + ". " + listAllRoom.get(index));
+        for (int index = 0; index < listAllRooms.size(); index++) {
+            System.out.println(index + 1 + ". " + listAllRooms.get(index));
         }
+    }
+
+    private static void showAllRoomNotDuplicate() {
+        List<Object> listAllRooms = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\room.csv");
+        TreeSet<String> listRoomNames = new TreeSet<>();
+        for (Object room : listAllRooms) {
+            Room roomCast = (Room) room;
+            listRoomNames.add(roomCast.getServiceName());
+        }
+        System.out.println("List all Rooms not dupplicate: " + listRoomNames + "\n");
     }
 }

@@ -37,11 +37,10 @@ public class CustomerManager {
                 listCustomers.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\customer.csv"));
                 listCustomers.add(customer);
                 ReadAndWriteFile.writeToFile(listCustomers, "src\\case_study_FuramaResort\\data\\customer.csv");
-                System.out.println("Do you like to continue adding Customers: \n" +
-                        "1.Yes\n" +
-                        "0.No");
-                int choiceAdd = Integer.parseInt(input.nextLine());
-                if (choiceAdd == 0) {
+
+                System.out.println("You don't want to continue. Press q to quit:\n");
+                String choiceAdd = input.nextLine();
+                if (choiceAdd.equals("q")) {
                     check = false;
                 }
             } catch (Exception e) {
@@ -62,50 +61,74 @@ public class CustomerManager {
         for (int index = 0; index < listCustomerCast.size(); index++) {
             System.out.println(index + 1 + ". " + listCustomerCast.get(index));
         }
+        listCustomers.clear();
+        listCustomers.addAll(listCustomerCast);
+        ReadAndWriteFile.writeToFile(listCustomers, "src\\case_study_FuramaResort\\data\\customer.csv");
     }
 
     public static void addNewBooking() {
         showInformationCustomers();
         List<Object> listCustomers = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\customer.csv");
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter a customer: ");
-        int choiceCustomer = Integer.parseInt(input.nextLine());
-        System.out.println("Choice a service: \n" +
-                "1.\tBooking Villa\n" +
-                "2.\tBooking House\n" +
-                "3.\tBooking Room\n");
-        int choiceService = Integer.parseInt(input.nextLine());
-        switch (choiceService) {
-            case 1:
-                bookingVilla(listCustomers, choiceCustomer);
-                break;
-            case 2:
-                ServiceManager.showAllHouse();
-                break;
-            case 3:
-                ServiceManager.showAllRoom();
-                break;
-            default:
+        boolean check = true;
+        while (check) {
+            try {
+                System.out.println("Enter a customer: ");
+                int choiceCustomer = Integer.parseInt(input.nextLine());
+                boolean checkChoiceCustomer = choiceCustomer > 0 && choiceCustomer < listCustomers.size() + 1;
+                if (!checkChoiceCustomer) {
+                    throw new IndexOutOfBoundsException();
+                }
+                System.out.println("Choice a service: \n" +
+                        "1.\tBooking Villa\n" +
+                        "2.\tBooking House\n" +
+                        "3.\tBooking Room\n");
+                int choiceService = Integer.parseInt(input.nextLine());
+                switch (choiceService) {
+                    case 1:
+                        ServiceManager.showAllVilla();
+                        System.out.println("Choice a villa: ");
+                        int choiceVilla = Integer.parseInt(input.nextLine());
+                        bookingService(listCustomers, choiceCustomer, choiceVilla, "src\\case_study_FuramaResort\\data\\villa.csv");
+                        check = false;
+                        break;
+                    case 2:
+                        ServiceManager.showAllHouse();
+                        System.out.println("Choice a house: ");
+                        int choiceHouse = Integer.parseInt(input.nextLine());
+                        bookingService(listCustomers, choiceCustomer, choiceHouse, "src\\case_study_FuramaResort\\data\\house.csv");
+                        check = false;
+                        break;
+                    case 3:
+                        ServiceManager.showAllRoom();
+                        System.out.println("Choice a room: ");
+                        int choiceRoom = Integer.parseInt(input.nextLine());
+                        bookingService(listCustomers, choiceCustomer, choiceRoom, "src\\case_study_FuramaResort\\data\\room.csv");
+                        check = false;
+                        break;
+                    default:
+                        System.err.println("Not in the Menu. Please choose again !");
+                }
+            } catch (NumberFormatException ex) {
+                System.err.println("Enter the wrong number format. Please re-enter !");
+            } catch (Exception e) {
                 System.err.println("Not in the Menu. Please choose again !");
+            }
         }
     }
 
-    private static void bookingVilla(List<Object> listCustomers, int choiceCustomer) {
-        List<Object> listBookingCustomers = new ArrayList<>();
-        ServiceManager.showAllVilla();
+    private static void bookingService(List<Object> listCustomers, int choiceCustomer, int choiceService, String path) {
+        List<Object> listAllServices = ReadAndWriteFile.readFromFile(path);
 
-        Scanner input = new Scanner(System.in);
-        System.out.println("Choice a villa: ");
-        int choiceVilla = Integer.parseInt(input.nextLine());
-
-        List<Object> listAllVillas = ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\villa.csv");
-        Customer customer = (Customer) listCustomers.get(choiceCustomer-1);
-        Villa villa = (Villa) listAllVillas.get(choiceVilla-1);
-        customer.setServiceUsage(villa);
-        listCustomers.remove(choiceCustomer-1);
-        listCustomers.add(choiceCustomer-1, customer);
-        listBookingCustomers.add(customer);
+        Customer customer = (Customer) listCustomers.get(choiceCustomer - 1);
+        Services service = (Services) listAllServices.get(choiceService - 1);
+        customer.setServiceUsage(service);
+        listCustomers.remove(choiceCustomer - 1);
+        listCustomers.add(choiceCustomer - 1, customer);
         ReadAndWriteFile.writeToFile(listCustomers, "src\\case_study_FuramaResort\\data\\customer.csv");
+
+        List<Object> listBookingCustomers = new ArrayList<>(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\booking.csv"));
+        listBookingCustomers.add(customer);
         ReadAndWriteFile.writeToFile(listBookingCustomers, "src\\case_study_FuramaResort\\data\\booking.csv");
     }
 }
