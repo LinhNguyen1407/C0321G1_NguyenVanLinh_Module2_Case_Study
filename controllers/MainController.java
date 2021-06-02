@@ -1,8 +1,6 @@
 package case_study_FuramaResort.controllers;
 
-import case_study_FuramaResort.manager.CustomerManager;
-import case_study_FuramaResort.manager.EmployeeManager;
-import case_study_FuramaResort.manager.ServiceManager;
+import case_study_FuramaResort.manager.*;
 import java.util.Scanner;
 
 public class MainController {
@@ -17,7 +15,8 @@ public class MainController {
                         "5.\tAdd New Booking\n" +
                         "6.\tAdd New Employee\n" +
                         "7.\tShow Information of Employee\n" +
-                        "8.\tExit\n");
+                        "8.\tSell Movie Ticket and Show Information of All Tickets\n" +
+                        "9.\tExit\n");
 
                 Scanner input = new Scanner(System.in);
                 int choice = Integer.parseInt(input.nextLine());
@@ -44,6 +43,9 @@ public class MainController {
                         EmployeeManager.showInformationEmployee();
                         break;
                     case 8:
+                        CinameManager.sellTicket();
+                        break;
+                    case 9:
                         System.exit(0);
                         break;
                     default:
