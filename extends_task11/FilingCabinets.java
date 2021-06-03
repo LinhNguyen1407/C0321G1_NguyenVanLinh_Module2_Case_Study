@@ -1,4 +1,4 @@
-package case_study_FuramaResort.extends_task10_11;
+package case_study_FuramaResort.extends_task11;
 
 import java.util.Scanner;
 import java.util.Stack;

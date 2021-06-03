@@ -1,8 +1,10 @@
 package case_study_FuramaResort.manager;
 
 import case_study_FuramaResort.commons.ReadAndWriteFile;
+import case_study_FuramaResort.commons.InputAndValidateService;
 import case_study_FuramaResort.models.*;
 import case_study_FuramaResort.controllers.MainController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -98,39 +100,26 @@ public class ServiceManager {
         Scanner input = new Scanner(System.in);
         boolean check = true;
         while (check) {
-            try {
-                System.out.println("Enter codeService: ");
-                String codeService = input.nextLine();
-                System.out.println("Enter serviceName: ");
-                String serviceName = input.nextLine();
-                System.out.println("Enter usableArea: ");
-                double usableArea = Double.parseDouble(input.nextLine());
-                System.out.println("Enter rentalCosts: ");
-                double rentalCosts = Double.parseDouble(input.nextLine());
-                System.out.println("Enter maxNumberPeople: ");
-                int maxNumberPeople = Integer.parseInt(input.nextLine());
-                System.out.println("Enter rentalType: ");
-                String rentalType = input.nextLine();
-                System.out.println("Enter roomStandard: ");
-                String roomStandard = input.nextLine();
-                System.out.println("Enter poolArea: ");
-                double poolArea = Double.parseDouble(input.nextLine());
-                System.out.println("Enter numFloors: ");
-                int numFloors = Integer.parseInt(input.nextLine());
+            String id = InputAndValidateService.inputVillaId();
+            String serviceName = InputAndValidateService.inputServiceName();
+            double usableArea = InputAndValidateService.inputUsableArea();
+            double rentalCosts = InputAndValidateService.inputRentalCosts();
+            int maxNumberPeople = InputAndValidateService.inputMaxNumberPeople();
+            String rentalType = InputAndValidateService.inputRentalType();
+            String roomStandard = InputAndValidateService.inputRoomStandard();
+            double poolArea = InputAndValidateService.inputPoolArea();
+            int numFloors = InputAndValidateService.inputNumFloors();
 
-                Villa villa = new Villa(codeService, serviceName, usableArea, rentalCosts, maxNumberPeople, rentalType, roomStandard, poolArea, numFloors);
-                listVillas.clear();
-                listVillas.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\villa.csv"));
-                listVillas.add(villa);
-                ReadAndWriteFile.writeToFile(listVillas, "src\\case_study_FuramaResort\\data\\villa.csv");
+            Villa villa = new Villa(id, serviceName, usableArea, rentalCosts, maxNumberPeople, rentalType, roomStandard, poolArea, numFloors);
+            listVillas.clear();
+            listVillas.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\villa.csv"));
+            listVillas.add(villa);
+            ReadAndWriteFile.writeToFile(listVillas, "src\\case_study_FuramaResort\\data\\villa.csv");
 
-                System.out.println("You don't want to continue. Press q to quit:\n");
-                String choiceAdd = input.nextLine();
-                if (choiceAdd.equals("q")) {
-                    check = false;
-                }
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
+            System.out.println("You don't want to continue. Press q to quit:\n");
+            String choiceAdd = input.nextLine();
+            if (choiceAdd.equals("q")) {
+                check = false;
             }
         }
     }
@@ -158,37 +147,25 @@ public class ServiceManager {
         Scanner input = new Scanner(System.in);
         boolean check = true;
         while (check) {
-            try {
-                System.out.println("Enter codeService: ");
-                String codeService = input.nextLine();
-                System.out.println("Enter serviceName: ");
-                String serviceName = input.nextLine();
-                System.out.println("Enter usableArea: ");
-                double usableArea = Double.parseDouble(input.nextLine());
-                System.out.println("Enter rentalCosts: ");
-                double rentalCosts = Double.parseDouble(input.nextLine());
-                System.out.println("Enter maxNumberPeople: ");
-                int maxNumberPeople = Integer.parseInt(input.nextLine());
-                System.out.println("Enter rentalType: ");
-                String rentalType = input.nextLine();
-                System.out.println("Enter roomStandard: ");
-                String roomStandard = input.nextLine();
-                System.out.println("Enter numFloors: ");
-                int numFloors = Integer.parseInt(input.nextLine());
+            String id = InputAndValidateService.inputHouseId();
+            String serviceName = InputAndValidateService.inputServiceName();
+            double usableArea = InputAndValidateService.inputUsableArea();
+            double rentalCosts = InputAndValidateService.inputRentalCosts();
+            int maxNumberPeople = InputAndValidateService.inputMaxNumberPeople();
+            String rentalType = InputAndValidateService.inputRentalType();
+            String roomStandard = InputAndValidateService.inputRoomStandard();
+            int numFloors = InputAndValidateService.inputNumFloors();
 
-                House house = new House(codeService, serviceName, usableArea, rentalCosts, maxNumberPeople, rentalType, roomStandard, numFloors);
-                listHouse.clear();
-                listHouse.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\house.csv"));
-                listHouse.add(house);
-                ReadAndWriteFile.writeToFile(listHouse, "src\\case_study_FuramaResort\\data\\house.csv");
+            House house = new House(id, serviceName, usableArea, rentalCosts, maxNumberPeople, rentalType, roomStandard, numFloors);
+            listHouse.clear();
+            listHouse.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\house.csv"));
+            listHouse.add(house);
+            ReadAndWriteFile.writeToFile(listHouse, "src\\case_study_FuramaResort\\data\\house.csv");
 
-                System.out.println("You don't want to continue. Press q to quit:\n");
-                String choiceAdd = input.nextLine();
-                if (choiceAdd.equals("q")) {
-                    check = false;
-                }
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
+            System.out.println("You don't want to continue. Press q to quit:\n");
+            String choiceAdd = input.nextLine();
+            if (choiceAdd.equals("q")) {
+                check = false;
             }
         }
     }
@@ -216,35 +193,24 @@ public class ServiceManager {
         Scanner input = new Scanner(System.in);
         boolean check = true;
         while (check) {
-            try {
-                System.out.println("Enter codeService: ");
-                String codeService = input.nextLine();
-                System.out.println("Enter serviceName: ");
-                String serviceName = input.nextLine();
-                System.out.println("Enter usableArea: ");
-                double usableArea = Double.parseDouble(input.nextLine());
-                System.out.println("Enter rentalCosts: ");
-                double rentalCosts = Double.parseDouble(input.nextLine());
-                System.out.println("Enter maxNumberPeople: ");
-                int maxNumberPeople = Integer.parseInt(input.nextLine());
-                System.out.println("Enter rentalType: ");
-                String rentalType = input.nextLine();
-                System.out.println("Enter freeServices: ");
-                String freeServices = input.nextLine();
+            String id = InputAndValidateService.inputRoomId();
+            String serviceName = InputAndValidateService.inputServiceName();
+            double usableArea = InputAndValidateService.inputUsableArea();
+            double rentalCosts = InputAndValidateService.inputRentalCosts();
+            int maxNumberPeople = InputAndValidateService.inputMaxNumberPeople();
+            String rentalType = InputAndValidateService.inputRentalType();
+            String freeService = InputAndValidateService.inputFreeService();
 
-                Room room = new Room(codeService, serviceName, usableArea, rentalCosts, maxNumberPeople, rentalType, freeServices);
-                listRoom.clear();
-                listRoom.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\room.csv"));
-                listRoom.add(room);
-                ReadAndWriteFile.writeToFile(listRoom, "src\\case_study_FuramaResort\\data\\room.csv");
+            Room room = new Room(id, serviceName, usableArea, rentalCosts, maxNumberPeople, rentalType, freeService);
+            listRoom.clear();
+            listRoom.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\room.csv"));
+            listRoom.add(room);
+            ReadAndWriteFile.writeToFile(listRoom, "src\\case_study_FuramaResort\\data\\room.csv");
 
-                System.out.println("You don't want to continue. Press q to quit:\n");
-                String choiceAdd = input.nextLine();
-                if (choiceAdd.equals("q")) {
-                    check = false;
-                }
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
+            System.out.println("You don't want to continue. Press q to quit:\n");
+            String choiceAdd = input.nextLine();
+            if (choiceAdd.equals("q")) {
+                check = false;
             }
         }
     }

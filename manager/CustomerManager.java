@@ -1,5 +1,6 @@
 package case_study_FuramaResort.manager;
 
+import case_study_FuramaResort.commons.InputAndValidateCustomer;
 import case_study_FuramaResort.commons.ReadAndWriteFile;
 import case_study_FuramaResort.models.*;
 
@@ -14,37 +15,25 @@ public class CustomerManager {
         Scanner input = new Scanner(System.in);
         boolean check = true;
         while (check) {
-            try {
-                System.out.println("Enter name: ");
-                String name = input.nextLine();
-                System.out.println("Enter birthday: ");
-                String birthday = input.nextLine();
-                System.out.println("Enter gender: ");
-                String gender = input.nextLine();
-                System.out.println("Enter idCard: ");
-                String idCard = input.nextLine();
-                System.out.println("Enter phoneNumber: ");
-                String phoneNumber = input.nextLine();
-                System.out.println("Enter email: ");
-                String email = input.nextLine();
-                System.out.println("Enter guestType: ");
-                String guestType = input.nextLine();
-                System.out.println("Enter address: ");
-                String address = input.nextLine();
+            String name = InputAndValidateCustomer.inputName();
+            String birthday = InputAndValidateCustomer.inputBirthday();
+            String genderTemp = InputAndValidateCustomer.inputGender();
+            String gender = InputAndValidateCustomer.standardizeString(genderTemp);
+            String idCard = InputAndValidateCustomer.inputIdCard();
+            String phoneNumber = InputAndValidateCustomer.inputPhoneNumber();
+            String email = InputAndValidateCustomer.inputEmail();
+            String guestType = InputAndValidateCustomer.inputGuestType();
+            String address = InputAndValidateCustomer.inputAddress();
+            Customer customer = new Customer(name, birthday, gender, idCard, phoneNumber, email, guestType, address);
+            listCustomers.clear();
+            listCustomers.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\customer.csv"));
+            listCustomers.add(customer);
+            ReadAndWriteFile.writeToFile(listCustomers, "src\\case_study_FuramaResort\\data\\customer.csv");
 
-                Customer customer = new Customer(name, birthday, gender, idCard, phoneNumber, email, guestType, address);
-                listCustomers.clear();
-                listCustomers.addAll(ReadAndWriteFile.readFromFile("src\\case_study_FuramaResort\\data\\customer.csv"));
-                listCustomers.add(customer);
-                ReadAndWriteFile.writeToFile(listCustomers, "src\\case_study_FuramaResort\\data\\customer.csv");
-
-                System.out.println("You don't want to continue. Press q to quit:\n");
-                String choiceAdd = input.nextLine();
-                if (choiceAdd.equals("q")) {
-                    check = false;
-                }
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
+            System.out.println("You don't want to continue. Press q to quit:\n");
+            String choiceAdd = input.nextLine();
+            if (choiceAdd.equals("q")) {
+                check = false;
             }
         }
     }
